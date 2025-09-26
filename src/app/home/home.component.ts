@@ -13,7 +13,7 @@ export class HomeComponent {
   public browserService = inject(BrowserService);
 
   GoToHome() {
-    this.browserService.url = 'https://amiens.unilasalle.fr';
+    this.browserService.url = 'https://google.fr';
     this.browserService.goToPage(this.browserService.url);
   }
 }

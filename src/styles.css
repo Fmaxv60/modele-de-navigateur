@@ -1,8 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
-@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Empêche le scroll global du body */
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body.mat-typography {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+app-root {
+  flex: 1 1 auto;
+  overflow-y: auto; /* Scroll uniquement dans app-root */
+  height: 100%;
+  box-sizing: border-box;
+  display: block;
+}

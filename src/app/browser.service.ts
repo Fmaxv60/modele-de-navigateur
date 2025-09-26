@@ -5,7 +5,7 @@ import { Injectable, NgZone } from '@angular/core';
 })
 export class BrowserService {
 
-  url = 'https://amiens.unilasalle.fr';
+  url = 'https://google.fr';
   canGoBack = false;
   canGoForward = false;
 

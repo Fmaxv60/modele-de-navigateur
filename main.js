@@ -1,5 +1,6 @@
 const { app, WebContentsView, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+const si = require('systeminformation');
 
 app.whenReady().then(() => {
 
@@ -18,10 +19,9 @@ app.whenReady().then(() => {
 
   if (app.isPackaged){
     win.loadFile('dist/browser-template/browser/index.html');
-  }else{
-    win.loadURL('http://localhost:4200')
+  } else {
+    win.loadURL('http://localhost:4200');
   }
-
 
   // WebContentsView initiate the rendering of a second view to browser the web
   const view = new WebContentsView();
@@ -33,6 +33,9 @@ app.whenReady().then(() => {
     view.setBounds({ x: 0, y: 55, width: winSize.width, height: winSize.height });
   }
 
+  win.on('resize', () => {
+    fitViewToWin();
+  });
   // Register events handling from the toolbar
   ipcMain.on('toogle-dev-tool', () => {
     if (win.webContents.isDevToolsOpened()) {
@@ -70,12 +73,11 @@ app.whenReady().then(() => {
     return view.webContents.loadURL(url);
   });
 
-
   ipcMain.handle('current-url', () => {
     return view.webContents.getURL();
   });
 
-  //Register events handling from the main windows
+  // Register events handling from the main windows
   win.once('ready-to-show', () => {
     fitViewToWin();
     view.webContents.loadURL('https://amiens.unilasalle.fr');
@@ -84,4 +86,21 @@ app.whenReady().then(() => {
   win.on('resized', () => {
     fitViewToWin();
   });
-})
+
+
+  // New feature
+  setInterval(async () => {
+    try {
+      const memData = await si.mem();
+      if (win) {
+        win.webContents.send('memory-usage', {
+          used: process.memoryUsage().rss,
+          total: memData.total
+        });
+      }
+    } catch (err) {
+      console.error('Error getting memory info:', err);
+    }
+  }, 1000);
+
+});

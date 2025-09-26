@@ -13,5 +13,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   onUrlChanged: (callback) => {
     ipcRenderer.on('url-changed', (event, url) => callback(url))
+  },
+  onMemoryUsage: (callback) => {
+    ipcRenderer.on('memory-usage', (event, memoryUsage) => callback(memoryUsage))
   }
 })

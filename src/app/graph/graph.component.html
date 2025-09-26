@@ -1,0 +1,4 @@
+<h2>
+  RAM utilisée : {{ (monitor.memoryUsage.used / 1048576) | number:'1.0-2' }} MB /
+  {{ (monitor.memoryUsage.total / (1048576 * 1024)) | number:'1.0-2' }} GB
+</h2>
