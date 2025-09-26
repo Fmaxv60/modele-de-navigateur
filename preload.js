@@ -9,5 +9,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   canGoForward: () => ipcRenderer.invoke('can-go-forward'),
   canGoBack: () => ipcRenderer.invoke('can-go-back'),
   goToPage: (url) => ipcRenderer.invoke('go-to-page', url),
-  currentUrl: () => ipcRenderer.invoke('current-url')
+  currentUrl: () => ipcRenderer.invoke('current-url'),
+
+  onUrlChanged: (callback) => {
+    ipcRenderer.on('url-changed', (event, url) => callback(url))
+  }
 })

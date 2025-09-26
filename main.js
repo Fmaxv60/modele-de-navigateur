@@ -5,12 +5,16 @@ app.whenReady().then(() => {
 
   // BrowserWindow initiate the rendering of the angular toolbar
   const win = new BrowserWindow({
-    width: 800,
+    width: 1200,
     height: 800,
+    title: "Uniweb",
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
   });
+
+  win.maximize();
 
   if (app.isPackaged){
     win.loadFile('dist/browser-template/browser/index.html');
@@ -29,15 +33,17 @@ app.whenReady().then(() => {
     view.setBounds({ x: 0, y: 55, width: winSize.width, height: winSize.height });
   }
 
-    win.webContents.openDevTools({ mode: 'detach' });
-
   // Register events handling from the toolbar
   ipcMain.on('toogle-dev-tool', () => {
-    if (winContent.isDevToolsOpened()) {
+    if (win.webContents.isDevToolsOpened()) {
       win.webContents.closeDevTools();
     } else {
       win.webContents.openDevTools({ mode: 'detach' });
     }
+  });
+
+  view.webContents.on('did-navigate', () => {
+    win.webContents.send('url-changed', view.webContents.getURL());
   });
 
   ipcMain.on('go-back', () => {

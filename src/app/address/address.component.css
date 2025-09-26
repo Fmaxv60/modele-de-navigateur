@@ -30,3 +30,6 @@
   color: inherit;
 }
 
+.bar-adress button{
+  pointer-events: none;
+}
