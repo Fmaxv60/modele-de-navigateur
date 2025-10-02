@@ -80,7 +80,7 @@ app.whenReady().then(() => {
   // Register events handling from the main windows
   win.once('ready-to-show', () => {
     fitViewToWin();
-    view.webContents.loadURL('https://amiens.unilasalle.fr');
+    view.webContents.loadURL('https://google.fr');
   });
 
   win.on('resized', () => {
